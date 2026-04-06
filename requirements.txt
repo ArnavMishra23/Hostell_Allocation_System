@@ -5,8 +5,8 @@
 #
 # Python Version Required: 3.10 or higher
 
-# Flask - Web framework (REQ-2.4.1)
-Flask==3.0.0
+# Flask - Web framework
+Flask==3.0.3
 
 # Flask-SQLAlchemy - Database ORM for SQLite
 Flask-SQLAlchemy==3.1.1
@@ -14,23 +14,23 @@ Flask-SQLAlchemy==3.1.1
 # Flask-Login - User session management
 Flask-Login==0.6.3
 
-# Flask-Bcrypt - Password hashing (SEC-01)
+# Flask-Bcrypt - Password hashing
 Flask-Bcrypt==1.0.1
 
-# Flask-WTF - Form handling with CSRF protection (SEC-03)
+# Flask-WTF - Form handling with CSRF protection
 Flask-WTF==1.2.1
 
 # WTForms - Form validation
 WTForms==3.1.1
 
-# SQLAlchemy - Database toolkit
-SQLAlchemy==2.0.23
+# SQLAlchemy - Database toolkit (UPDATED FOR PYTHON 3.14)
+SQLAlchemy==2.1.0
 
 # Werkzeug - WSGI utilities
-Werkzeug==3.0.1
+Werkzeug==3.0.3
 
 # Jinja2 - Template engine
-Jinja2==3.1.2
+Jinja2==3.1.3
 
 # Click - Command line interface
 click==8.1.7
@@ -39,28 +39,13 @@ click==8.1.7
 itsdangerous==2.1.2
 
 # MarkupSafe - String markup handling
-MarkupSafe==2.1.3
+MarkupSafe==2.1.5
 
 # Python-dotenv - Environment variable management
-python-dotenv==1.0.0
+python-dotenv==1.0.1
 
 # Gunicorn - Production WSGI server
 gunicorn==21.2.0
 
 # PostgreSQL driver for deployment platforms like Render
 psycopg2-binary==2.9.9
-
-# For better error logging
-sentry-sdk==1.38.0
-
-# For API responses (if you add REST API)
-flask-restful==0.3.10
-
-# For database migrations (for future)
-flask-migrate==4.0.5
-
-# For better production logging
-python-json-logger==2.0.7
-
-# For email notifications (future feature)
-flask-mail==0.9.1
