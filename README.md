@@ -37,9 +37,20 @@ Students can apply for rooms and track their status, while administrators manage
 Example:
 
     python -m venv .venv
-    source .venv/Scripts/activate
+    
+    # Windows
+    .venv\Scripts\activate
+    # Linux / Mac
+    source .venv/bin/activate
+    
     pip install -r requirements.txt
-    export SECRET_KEY="your-local-secret"
+    
+    # Windows (PowerShell)
+    set SECRET_KEY=your-secret-key
+    
+    # Linux / Mac
+    export SECRET_KEY=your-secret-key
+    
     export DEFAULT_ADMIN_EMAIL="admin@example.com"
     export DEFAULT_ADMIN_PASSWORD="StrongPassword123"
     python app.py
