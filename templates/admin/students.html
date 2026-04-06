@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Students - Hostel Room Allocation System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2><i class="fas fa-users me-2 text-primary"></i>All Students</h2>
+            <p class="text-muted mb-0">Registered students and academic details.</p>
+        </div>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+    </div>
+
+    <div class="card shadow border-0">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Student List</h5>
+        </div>
+        <div class="card-body p-0">
+            {% if students %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Year</th>
+                            <th>CGPA</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.year_of_study or 'N/A' }}</td>
+                            <td>{{ student.cgpa if student.cgpa is not none else 'N/A' }}</td>
+                            <td>{{ student.contact_no or 'N/A' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-user-slash text-muted" style="font-size: 48px;"></i>
+                <p class="text-muted mt-2 mb-0">No students found.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Reports - Hostel Room Allocation System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2><i class="fas fa-chart-bar me-2 text-primary"></i>Reports</h2>
+            <p class="text-muted mb-0">Basic occupancy and application analytics.</p>
+        </div>
+        <button class="btn btn-outline-secondary" onclick="window.print()">
+            <i class="fas fa-print me-2"></i>Print
+        </button>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body text-center">
+                    <h3>{{ total_rooms }}</h3>
+                    <p class="mb-0">Total Rooms</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body text-center">
+                    <h3>{{ available_rooms }}</h3>
+                    <p class="mb-0">Available Rooms</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger text-white h-100">
+                <div class="card-body text-center">
+                    <h3>{{ occupied_rooms }}</h3>
+                    <p class="mb-0">Occupied Rooms</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark h-100">
+                <div class="card-body text-center">
+                    <h3>{{ maintenance_rooms }}</h3>
+                    <p class="mb-0">Maintenance Rooms</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card shadow border-0 h-100">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Room Types</h5>
+                </div>
+                <div class="card-body">
+                    {% if room_types %}
+                    <table class="table table-sm mb-0">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th class="text-end">Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for room_type, count in room_types %}
+                            <tr>
+                                <td>{{ room_type|title }}</td>
+                                <td class="text-end">{{ count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p class="text-muted mb-0">No room data available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow border-0 h-100">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Students by Year</h5>
+                </div>
+                <div class="card-body">
+                    {% if students_by_year %}
+                    <table class="table table-sm mb-0">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th class="text-end">Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for year, count in students_by_year %}
+                            <tr>
+                                <td>{{ year }}</td>
+                                <td class="text-end">{{ count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p class="text-muted mb-0">No student data available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow border-0">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Application Summary</h5>
+        </div>
+        <div class="card-body">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <h3 class="text-primary">{{ total_applications }}</h3>
+                    <p class="text-muted mb-0">Total Applications</p>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="text-warning">{{ pending_applications }}</h3>
+                    <p class="text-muted mb-0">Pending</p>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="text-success">{{ allocated_applications }}</h3>
+                    <p class="text-muted mb-0">Allocated</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

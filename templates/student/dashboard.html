@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - Hostel Room Allocation System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Welcome Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-primary text-white border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <div class="bg-white rounded-circle d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                <i class="fas fa-user-graduate text-primary" style="font-size: 36px;"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-4">
+                            <h3 class="mb-1">Welcome, {{ current_user.name }}!</h3>
+                            <p class="mb-0 opacity-75">
+                                <i class="fas fa-envelope me-1"></i>{{ current_user.email }} |
+                                <i class="fas fa-graduation-cap me-1"></i>Year {{ current_user.year_of_study }} |
+                                <i class="fas fa-star me-1"></i>CGPA: {{ current_user.cgpa }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Cards -->
+    <div class="row g-4 mb-4">
+        <!-- Application Status -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-clipboard-list text-info" style="font-size: 20px;"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-muted">Application Status</h6>
+                        </div>
+                    </div>
+                    {% if application %}
+                        <h4 class="mb-2">
+                            {% if application.status == 'pending' %}
+                                <span class="badge bg-warning">Pending</span>
+                            {% elif application.status == 'allocated' %}
+                                <span class="badge bg-success">Allocated</span>
+                            {% elif application.status == 'waitlisted' %}
+                                <span class="badge bg-info">Waitlisted</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ application.status|title }}</span>
+                            {% endif %}
+                        </h4>
+                        <p class="text-muted mb-0">
+                            <small>Applied on {{ application.application_date.strftime('%d %b %Y') }}</small>
+                        </p>
+                    {% else %}
+                        <h4 class="mb-2"><span class="badge bg-secondary">No Application</span></h4>
+                        <p class="text-muted mb-0">
+                            <small>You haven't applied for a room yet.</small>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Room Status -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-bed text-success" style="font-size: 20px;"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-muted">Room Status</h6>
+                        </div>
+                    </div>
+                    {% if allocated_room %}
+                        <h4 class="mb-2">{{ allocated_room.room_number }}</h4>
+                        <p class="text-muted mb-0">
+                            <small>
+                                <i class="fas fa-building me-1"></i>{{ allocated_room.room_type|title }} Room |
+                                <i class="fas fa-users me-1"></i>Capacity: {{ allocated_room.capacity }}
+                            </small>
+                        </p>
+                    {% else %}
+                        <h4 class="mb-2"><span class="badge bg-secondary">Not Allocated</span></h4>
+                        <p class="text-muted mb-0">
+                            <small>Wait for allocation process to complete.</small>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Priority Score -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                            <i class="fas fa-trophy text-warning" style="font-size: 20px;"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 text-muted">Your Priority</h6>
+                        </div>
+                    </div>
+                    <h4 class="mb-2">{{ "%.1f"|format(current_user.get_priority_score()) }}</h4>
+                    <p class="text-muted mb-0">
+                        <small>
+                            Year: {{ current_user.year_of_study }} × 100 + CGPA: {{ current_user.cgpa }}
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-bolt me-2 text-primary"></i>Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        {% if not application or application.status != 'pending' %}
+                            <div class="col-md-4">
+                                <a href="{{ url_for('apply_for_room') }}" class="btn btn-primary w-100 py-3">
+                                    <i class="fas fa-plus-circle mb-2 d-block" style="font-size: 24px;"></i>
+                                    Apply for Room
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div class="col-md-4">
+                            <a href="{{ url_for('application_status') }}" class="btn btn-outline-primary w-100 py-3">
+                                <i class="fas fa-eye mb-2 d-block" style="font-size: 24px;"></i>
+                                View Status
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Allocation Information -->
+    {% if allocation %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-check-circle me-2"></i>Allocation Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="text-muted">Room Number:</td>
+                                    <td class="fw-bold">{{ allocated_room.room_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Room Type:</td>
+                                    <td>{{ allocated_room.room_type|title }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Floor:</td>
+                                    <td>{{ allocated_room.floor or 'N/A' }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="text-muted">Capacity:</td>
+                                    <td>{{ allocated_room.capacity }} persons</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Allocated On:</td>
+                                    <td>{{ allocation.allocation_date.strftime('%d %b %Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Amenities:</td>
+                                    <td>{{ allocated_room.amenities or 'Standard' }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
