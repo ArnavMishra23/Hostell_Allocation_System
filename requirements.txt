@@ -47,5 +47,5 @@ python-dotenv==1.0.1
 # Gunicorn - Production WSGI server
 gunicorn==21.2.0
 
-# PostgreSQL driver for deployment
-psycopg2-binary==2.9.9
+# PostgreSQL driver for deployment on newer Python versions
+psycopg[binary]>=3.2,<4
