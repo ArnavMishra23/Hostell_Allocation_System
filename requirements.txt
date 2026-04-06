@@ -8,7 +8,7 @@
 # Flask - Web framework
 Flask==3.0.3
 
-# Flask-SQLAlchemy - Database ORM for SQLite
+# Flask-SQLAlchemy - Database ORM
 Flask-SQLAlchemy==3.1.1
 
 # Flask-Login - User session management
@@ -23,8 +23,8 @@ Flask-WTF==1.2.1
 # WTForms - Form validation
 WTForms==3.1.1
 
-# SQLAlchemy - Database toolkit (UPDATED FOR PYTHON 3.14)
-SQLAlchemy==2.1.0
+# SQLAlchemy - Database toolkit (FIXED - Use latest stable 2.0.x)
+SQLAlchemy==2.0.48
 
 # Werkzeug - WSGI utilities
 Werkzeug==3.0.3
@@ -47,5 +47,5 @@ python-dotenv==1.0.1
 # Gunicorn - Production WSGI server
 gunicorn==21.2.0
 
-# PostgreSQL driver for deployment platforms like Render
+# PostgreSQL driver for deployment
 psycopg2-binary==2.9.9
