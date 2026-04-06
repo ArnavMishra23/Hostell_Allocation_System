@@ -49,3 +49,18 @@ gunicorn==21.2.0
 
 # PostgreSQL driver for deployment platforms like Render
 psycopg2-binary==2.9.9
+
+# For better error logging
+sentry-sdk==1.38.0
+
+# For API responses (if you add REST API)
+flask-restful==0.3.10
+
+# For database migrations (for future)
+flask-migrate==4.0.5
+
+# For better production logging
+python-json-logger==2.0.7
+
+# For email notifications (future feature)
+flask-mail==0.9.1

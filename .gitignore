@@ -32,3 +32,33 @@ CodeExplanation.md
 VIVA_QUICK_GUIDE.md
 HowtoRun&StartProject.md
 hostelAllocationSystem.zip
+
+
+# ===== ADDITIONS (Optional but Recommended) =====
+# Flask instance folder
+instance/
+
+# pip files
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Poetry
+poetry.lock
+
+# Pytest
+.pytest_cache/
+.coverage
+
+# MacOS
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+$RECYCLE.BIN/
+ehthumbs.db
+
+# Temp files
+*.tmp
+*~
+.~*

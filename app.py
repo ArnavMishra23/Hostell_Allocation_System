@@ -22,6 +22,8 @@ import os
 import re
 import secrets
 from extensions import db, bcrypt, login_manager, csrf
+import logging
+import sys
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -36,6 +38,9 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY') or secrets.token_hex(32)
 database_url = os.getenv('DATABASE_URL')
 if database_url and database_url.startswith('postgres://'):
     database_url = database_url.replace('postgres://', 'postgresql://', 1)
+
+if database_url and 'sslmode' not in database_url:
+    database_url += '?sslmode=require&connect_timeout=10'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url or 'sqlite:///hostel_allocation.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -804,9 +809,9 @@ def init_db():
                     password=admin_password,
                     name='System Administrator',
                     role='admin',
-                    year_of_study=0,
-                    cgpa=0.0,
-                    gender='other'
+                    year_of_study=None,
+                    cgpa=None,
+                    gender=None
                 )
                 db.session.add(admin)
                 db.session.commit()
@@ -826,4 +831,11 @@ if __name__ == '__main__':
     
     For production, use a WSGI server like Gunicorn.
     """
-    app.run(debug=False, host='0.0.0.0', port=5000)
+    port = int(os.getenv('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
+
+if not app.debug:
+    handler = logging.StreamHandler(sys.stdout)
+    handler.setLevel(logging.INFO)
+    app.logger.addHandler(handler)
+    app.logger.setLevel(logging.INFO)
